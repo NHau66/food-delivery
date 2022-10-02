@@ -3,6 +3,9 @@ import React, { useRef, useEffect } from 'react';
 import { Container } from 'reactstrap';
 import logo from '../../assets/images/res-logo.png';
 import { NavLink, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { cartUiActions } from '../../store/shopping-cart/cartUiSlice';
 
 import '../../styles/header.css';
 
@@ -28,15 +31,21 @@ const nav__links = [
 const Header = () => {
     const menuRef = useRef(null);
     const headerRef = useRef(null);
+    const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+    const dispatch = useDispatch();
 
     const toggleMenu = () => menuRef.current.classList.toggle('show__menu');
+
+    const toggleCart = () => {
+        dispatch(cartUiActions.toggle());
+    };
 
     useEffect(() => {
         window.addEventListener('scroll', () => {
             if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                headerRef.current.classList.add('header_shrink');
+                headerRef.current.classList.add('header__shrink');
             } else {
-                headerRef.current.classList.remove('header_shrink');
+                headerRef.current.classList.remove('header__shrink');
             }
         });
 
@@ -52,7 +61,7 @@ const Header = () => {
                         <h5>Tasty Treat</h5>
                     </div>
 
-                    {/* === menu === */}
+                    {/* ======= menu ======= */}
                     <div className="navigation" ref={menuRef} onClick={toggleMenu}>
                         <div className="menu d-flex align-items-center gap-5">
                             {nav__links.map((item, index) => (
@@ -67,11 +76,11 @@ const Header = () => {
                         </div>
                     </div>
 
-                    {/* === nav right icons === */}
+                    {/* ======== nav right icons ========= */}
                     <div className="nav__right d-flex align-items-center gap-4">
-                        <span className="cart__icon">
+                        <span className="cart__icon" onClick={toggleCart}>
                             <i class="ri-shopping-basket-line"></i>
-                            <span className="cart__badge">2</span>
+                            <span className="cart__badge">{totalQuantity}</span>
                         </span>
 
                         <span className="user">
