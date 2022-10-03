@@ -37,6 +37,10 @@
     font-size: 0.9rem;
 }
 
+.addTOCart__btn:hover {
+    background: var(--text-color);
+}
+
 @media only screen and (max-width: 992px) {
     .product__content h5 a {
         font-size: 0.8rem;
@@ -44,6 +48,7 @@
 
     .product__item {
         padding: 20px;
+        height: 260px;
     }
 
     .addTOCart__btn {
